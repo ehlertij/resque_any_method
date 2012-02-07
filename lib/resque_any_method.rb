@@ -27,6 +27,7 @@ module ResqueAnyMethod
     end
 
     def resque(method, *args)
+      return self.send(method, *args) if Resque.inline?
       Resque.enqueue(self, nil, method, *args)
     end
   end
@@ -34,6 +35,7 @@ module ResqueAnyMethod
   # We can pass this any Repository instance method that we want to
   # run later.
   def resque(method, *args)
+    return self.send(method, *args) if Resque.inline?
     Resque.enqueue(self.class, id, method, *args)
   end
 end
