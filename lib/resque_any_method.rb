@@ -2,7 +2,7 @@ require "resque_any_method/version"
 require 'resque'
 
 module ResqueAnyMethod
-    def self.included(base)
+  def self.included(base)
     base.extend(ClassMethods)    
   end
 
@@ -27,21 +27,13 @@ module ResqueAnyMethod
     end
 
     def resque_method(method, *args)
-      if (Rails.env.test? or Rails.env.development?) and !ENV["WITH_RESQUE"]
-        self.send(method, *args)
-      else
-        Resque.enqueue(self, nil, method, *args)
-      end
+      Resque.enqueue(self, nil, method, *args)
     end
   end
 
   # We can pass this any Repository instance method that we want to
   # run later.
   def resque_method(method, *args)
-    if (Rails.env.test? or Rails.env.development?) and !ENV["WITH_RESQUE"]
-      self.send(method, *args)
-    else
-      Resque.enqueue(self.class, id, method, *args)
-    end
+    Resque.enqueue(self.class, id, method, *args)
   end
 end
