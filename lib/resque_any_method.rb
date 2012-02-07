@@ -26,14 +26,14 @@ module ResqueAnyMethod
       end
     end
 
-    def resque_method(method, *args)
+    def resque(method, *args)
       Resque.enqueue(self, nil, method, *args)
     end
   end
 
   # We can pass this any Repository instance method that we want to
   # run later.
-  def resque_method(method, *args)
+  def resque(method, *args)
     Resque.enqueue(self.class, id, method, *args)
   end
 end

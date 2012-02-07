@@ -4,8 +4,8 @@ if backgrounding multiple methods in a single model.
 
 ## Methods
 
-* `Class.resque_method(method, *args)` backgrounds a class method call.
-* `resque_method(method, *args)` backgrounds an instance method call.
+* `Class.resque(method, *args)` backgrounds a class method call.
+* `resque(method, *args)` backgrounds an instance method call.
 * `resque_queue(queue)` chooses which queue to add the backgrounded methods to.
 
 ## Examples
@@ -24,8 +24,8 @@ if backgrounding multiple methods in a single model.
       end
     end
 
-    > Post.resque_method(:archive_old_posts, 5)
+    > Post.resque(:archive_old_posts, 5)
     # Backgrounds `Post.archive_old_posts(5)` for Resque.
 
-    > post.resque_method(:archive)
+    > post.resque(:archive)
     # Backgrounds `Post.find(post_id).archive` for Resque.
